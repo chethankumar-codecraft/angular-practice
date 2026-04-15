@@ -1,0 +1,70 @@
+section {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: sans-serif;
+}
+
+/* Shared styles for input & main button */
+section input,
+section button:first-child {
+  width: 120px;
+  height: 40px;
+  box-sizing: border-box;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0 10px;
+
+  font-size: 14px;
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+/* Input specific */
+section input {
+  background: #fff;
+}
+
+/* Button replacing input */
+section button:first-child {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+/* Hover/focus consistency */
+section input:focus,
+section button:first-child:hover {
+  border-color: #007bff;
+  background: #eef6ff;
+}
+
+/* + and - buttons */
+section button:not(:first-child) {
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #007bff;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+section button:not(:first-child):hover {
+  background: #0056b3;
+}
+
+input {
+    text-align: center;
+}
+
+section button:not(:first-child):active {
+  transform: scale(0.95);
+}
