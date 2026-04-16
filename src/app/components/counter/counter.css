@@ -4,10 +4,7 @@ section {
   gap: 8px;
   font-family: sans-serif;
 }
-
-/* Shared styles for input & main button */
-section input,
-section button:first-child {
+section input {
   width: 120px;
   height: 40px;
   box-sizing: border-box;
@@ -22,20 +19,10 @@ section button:first-child {
   transition: all 0.2s ease;
 }
 
-/* Input specific */
 section input {
   background: #fff;
 }
-
-/* Button replacing input */
-section button:first-child {
-  background: #f5f5f5;
-  cursor: pointer;
-}
-
-/* Hover/focus consistency */
-section input:focus,
-section button:first-child:hover {
+section input:focus {
   border-color: #007bff;
   background: #eef6ff;
 }
@@ -54,7 +41,9 @@ section button:not(:first-child) {
   font-weight: bold;
 
   cursor: pointer;
-  transition: transform 0.1s ease, background 0.2s ease;
+  transition:
+    transform 0.1s ease,
+    background 0.2s ease;
 }
 
 section button:not(:first-child):hover {
@@ -62,7 +51,7 @@ section button:not(:first-child):hover {
 }
 
 input {
-    text-align: center;
+  text-align: center;
 }
 
 section button:not(:first-child):active {

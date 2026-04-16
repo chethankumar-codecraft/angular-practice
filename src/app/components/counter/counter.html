@@ -1,1 +1,5 @@
-
+<section>
+  <input onfocus="this.select()" (change)="handleInputChange($event)" [value]="value()" />
+  <button (click)="increment()">+</button>
+  <button (click)="decrement()">-</button>
+</section>

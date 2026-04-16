@@ -4,8 +4,10 @@
     <button class="primary" type="button">Search</button>
   </form>
   <section class="results">
-    @for (location of housingLocation; track $index) {
+    @for (location of locationService.getAllLocations(); track $index) {
       <app-housing-location [location]="location" (onLocationClick)="moveToTop($event)" />
+    } @empty {
+      <h1>Empty data</h1>
     }
   </section>
 </section>
