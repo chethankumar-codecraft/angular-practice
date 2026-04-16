@@ -34,3 +34,55 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+.selected {
+  display: block;
+  border: 2px solid #3f51b5;
+  background-color: rgba(63, 81, 181, 0.1);
+  border-radius: 10px;
+}
+.selected {
+  position: relative;
+}
+
+.selected::after {
+  content: '✔';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: #3f51b5;
+  color: white;
+  font-size: 12px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  z-index: 10;
+}
+.delete-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background-color: #e53935;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover:not(:disabled) {
+  background-color: #c62828;
+}
+
+.delete-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.delete-btn:disabled {
+  background-color: #ccc;
+  color: #777;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

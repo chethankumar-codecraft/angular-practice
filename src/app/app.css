@@ -1,0 +1,6 @@
+.brand-name {
+  border-bottom: 2px solid #007acc; /* Adjust color and thickness as needed */
+  padding-bottom: 10px; /* Optional: adds some space below the border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+}

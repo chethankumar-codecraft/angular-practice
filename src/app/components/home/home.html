@@ -3,9 +3,23 @@
     <input type="text" placeholder="Filter by city" />
     <button class="primary" type="button">Search</button>
   </form>
+  <section>
+    <label>
+      Edit Mode :
+      <input type="checkbox" (click)="handleCheck($event)" />
+    </label>
+    <p>{{ modeString() }}</p>
+    <button class="delete-btn" [disabled]="selectedIds().length === 0" (click)="onDelete()">
+      Delete Selected Items
+    </button>
+  </section>
   <section class="results">
     @for (location of locationService.getAllLocations(); track $index) {
-      <app-housing-location [location]="location" (onLocationClick)="moveToTop($event)" />
+      <app-housing-location
+        [location]="location"
+        (onLocationClick)="handleClick($event)"     
+        [class.selected]="selectedIds().includes(location.id)"
+      />
     } @empty {
       <h1>Empty data</h1>
     }
