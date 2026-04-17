@@ -11,7 +11,7 @@ import { BASE_URL, LocationService } from '../../services/location-service';
 })
 export class HousingLocation {
   location = input.required<HousingLocationInfo>();
-  onLocationClick = output<HousingLocationInfo>();
+  locationClick = output<HousingLocationInfo>();
   locationService = inject(LocationService);
   baseURL = inject(BASE_URL);
 
@@ -20,7 +20,7 @@ export class HousingLocation {
     console.log(event.type);
     console.log(this.baseURL);
     console.log(`${this.location().name} is clicked`);
-    this.onLocationClick.emit(this.location());
+    this.locationClick.emit(this.location());
   }
 
 }
