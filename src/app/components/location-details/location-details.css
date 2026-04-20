@@ -28,3 +28,12 @@ button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+.listing-photo {
+  width: 50%;
+  height: 400px;
+}
+.photo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

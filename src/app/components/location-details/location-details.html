@@ -1,10 +1,12 @@
 <article>
-  <img
-    class="listing-photo"
-    [src]="location?.photo"
-    alt="Exterior photo of {{ location?.name }}"
-    crossorigin
-  />
+  <div class="photo-container">
+    <img
+      class="listing-photo"
+      [src]="location?.photo"
+      alt="Exterior photo of {{ location?.name }}"
+      crossorigin
+    />
+  </div>
   <section class="listing-description">
     <h2 class="listing-heading">{{ location?.name }}</h2>
     <p class="listing-location">{{ location?.city }}, {{ location?.state }}</p>

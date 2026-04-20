@@ -45,6 +45,8 @@ export class Home {
     this.selectedIds.set([]);
   }
   onRestore() {
+    const confirmed = confirm('Are you sure you want to restore all the deleted items?');
+    if (!confirmed) return;
     this.locationService.restoreAllDeletedLocation();
   }
 }

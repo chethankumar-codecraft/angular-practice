@@ -19,17 +19,13 @@ export class LocationDetails {
   locationService: LocationService = inject(LocationService);
   location: HousingLocationInfo | undefined;
   router = inject(Router);
-  allLocationsList: HousingLocationInfo[];
-  locationIndex: number;
+  allLocationsList: HousingLocationInfo[] = [];
+  locationIndex = -1;
 
   constructor() {
     LocationDetails.count += 1;
     console.log('The instance number: ', LocationDetails.count);
     // console.log('This id of the location ', this.housingLocationId);
-    this.allLocationsList = this.locationService.getAllLocations();
-    this.locationIndex = this.allLocationsList.findIndex(
-      (item) => item.id === this.housingLocationId,
-    );
   }
   ngOnInit() {
     console.log('All are ready');
