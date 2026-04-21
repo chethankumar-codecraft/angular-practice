@@ -9,13 +9,13 @@
     <div class="notifications">
       <strong>Notifications:</strong>
       <!-- TODO: Replace 'Loading...' with @if block using notificationsEnabled() -->
-      @if (notificationEnabled()) {
+      @if (notificationPreference()) {
         Enabled
       } @else {
         Disabled
       }
       <button (click)="toggleNotifications()" class="override-btn">
-        @if (notificationEnabled()) {
+        @if (notificationPreference()) {
           Disable
         } @else {
           Enable

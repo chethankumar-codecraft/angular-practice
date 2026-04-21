@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { signal, computed, linkedSignal } from '@angular/core';
+import { signal, computed, linkedSignal, effect } from '@angular/core';
 
 @Component({
   selector: 'app-linked-signal-demo',
@@ -13,10 +13,16 @@ export class LinkedSignalDemo {
   // notificationEnabled = computed(() => {
   //   return this.userStatus() === 'online';
   // });
-  notificationEnabled = linkedSignal(() => {
-    return this.userStatus() === 'online';
-  });
 
+  notificationPreference = signal<boolean>(this.userStatus() === 'online');
+  // notificationEnabled = computed(() => {
+  //   return this.userStatus() === 'online';
+  // });
+
+  notificationEffect = effect(() => {
+    if (this.userStatus() === 'online') this.notificationPreference.set(true);
+    else this.notificationPreference.set(false);
+  });
   // TODO: Create statusMessage computed signal that returns appropriate message for each status
   statusMessage = computed(() => {
     const status = this.userStatus();
@@ -68,6 +74,6 @@ export class LinkedSignalDemo {
   }
   toggleNotifications() {
     // This works with linkedSignal but would error with computed!
-    this.notificationEnabled.update((prev) => !prev);
+    this.notificationPreference.update((prev) => !prev);
   }
 }
