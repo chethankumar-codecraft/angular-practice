@@ -1,8 +1,9 @@
-<button class="container" (click)="handleClick($event)">
+<button class="container" (click)="handleClick($event)" [class.selected]="selectedLocation()">
   <section class="listing">
     @if (location().wifi) {
       <img src="/public/wifi.svg" class="wifi-icon" alt="WiFi available" />
     }
+
     <img
       class="listing-photo"
       [src]="location().photo"

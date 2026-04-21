@@ -6,7 +6,7 @@
   <section>
     <label>
       Edit Mode :
-      <input type="checkbox" (click)="handleCheck($event)" />
+      <input class="checkbox" type="checkbox" (click)="handleCheck($event)" />
     </label>
     <p>{{ modeString() }}</p>
     <button class="delete-btn" [disabled]="selectedIds().length === 0" (click)="onDelete()">
@@ -25,7 +25,7 @@
       <app-housing-location
         [location]="location"
         (locationClick)="handleClick($event)"
-        [class.selected]="selectedIds().includes(location.id)"
+        [selectedLocation]="selectedIds().includes(location.id)"
       />
     } @empty {
       <h1>No Homes Available</h1>

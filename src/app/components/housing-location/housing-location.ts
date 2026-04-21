@@ -14,6 +14,7 @@ export class HousingLocation {
   locationClick = output<HousingLocationInfo>();
   locationService = inject(LocationService);
   baseURL = inject(BASE_URL);
+  selectedLocation = input<boolean>();
 
   handleClick(event: MouseEvent) {
     console.log(event.target);
@@ -22,5 +23,4 @@ export class HousingLocation {
     console.log(`${this.location().name} is clicked`);
     this.locationClick.emit(this.location());
   }
-
 }
