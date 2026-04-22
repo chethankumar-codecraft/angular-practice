@@ -1,0 +1,7 @@
+<select>
+  @for (shippingOption of shippingOptions(); track shippingOption) {
+    <option>{{ shippingOption }}</option>
+  }
+</select>
+<input type="text" [value]="userSelectedShippingOption()" />
+<button (click)="changeShippingOptions()">change shipping options</button>

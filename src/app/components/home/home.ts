@@ -24,8 +24,10 @@ export class Home {
       ? 'Click on a property card to view its details'
       : 'Please select the items to edit',
   );
+  locations = signal<HousingLocationInfo[]>(this.locationService.getAllLocations());
+
   cards = linkedSignal<HousingCardVM[]>(() => {
-    return this.locationService.getAllLocations().map((item) => {
+    return this.locations().map((item) => {
       return {
         ...item,
         selected: false,
@@ -68,22 +70,10 @@ export class Home {
     const confirmed = confirm('Are you sure you want to delete selected items?');
     if (!confirmed) return;
     this.locationService.deleteLocationsByIds(this.selectedIds());
-    this.cards.set(
-      this.locationService.getAllLocations().map((item) => ({
-        ...item,
-        selected: false,
-      })),
-    );
   }
   onRestore() {
     const confirmed = confirm('Are you sure you want to restore all the deleted items?');
     if (!confirmed) return;
     this.locationService.restoreAllDeletedLocation();
-    this.cards.set(
-      this.locationService.getAllLocations().map((item) => ({
-        ...item,
-        selected: false,
-      })),
-    );
   }
 }

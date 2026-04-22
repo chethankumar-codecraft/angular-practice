@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { signal, computed, linkedSignal, effect } from '@angular/core';
+import { ShippingSelection } from '@components/shipping-selection/shipping-selection';
 
 @Component({
   selector: 'app-linked-signal-demo',
   templateUrl: './linked-signal-demo.html',
   styleUrl: './linked-signal-demo.css',
+  imports: [ShippingSelection],
 })
 export class LinkedSignalDemo {
   userStatus = signal<'online' | 'away' | 'offline'>('offline');
