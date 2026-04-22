@@ -3,5 +3,5 @@
     <option>{{ shippingOption }}</option>
   }
 </select>
-<input type="text" [value]="userSelectedShippingOption()" />
+<input type="text" [value]="userSelectedShippingOption()" (change)="handleUserInput($event)" />
 <button (click)="changeShippingOptions()">change shipping options</button>

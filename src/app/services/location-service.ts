@@ -1,5 +1,6 @@
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { inject, Injectable, InjectionToken, Signal, signal } from '@angular/core';
 import { HousingLocationInfo } from '../models/housing-location-info';
+import { __values } from 'tslib';
 
 export const BASE_URL = new InjectionToken<string>('base-url', {
   providedIn: 'root',
@@ -127,35 +128,48 @@ export class LocationService {
       deleted: false,
     },
   ];
+
+  private locations = signal<HousingLocationInfo[]>(this.housingLocations);
+
   getAllLocations() {
-    return this.housingLocations.filter((item) => item.deleted != true);
+    return this.locations.asReadonly();
   }
 
   getLocationForId(id: number): HousingLocationInfo | undefined {
-    return this.housingLocations.find(
-      (location) => location.id === id && location.deleted === false,
-    );
+    return this.locations().find((location) => location.id === id && location.deleted === false);
   }
 
   deleteLocationsByIds(ids: number[]) {
-    this.housingLocations = this.housingLocations.map((item) => {
-      if (ids.includes(item.id)) {
-        item.deleted = true;
-      }
-      return item;
-    });
+    this.locations.update((prev) =>
+      prev.map((item) => {
+        if (ids.includes(item.id)) {
+          return { ...item, deleted: true };
+        }
+        return item;
+      }),
+    );
   }
 
   restoreAllDeletedLocation() {
-    this.housingLocations = this.housingLocations.map((item) => {
-      return {
-        ...item,
-        deleted: false,
-      };
-    });
+    this.locations.update((prev) =>
+      prev.map((item) => {
+        return {
+          ...item,
+          deleted: false,
+        };
+      }),
+    );
   }
 
   getDeletedCount() {
-    return this.housingLocations.filter((item) => item.deleted).length;
+    return this.locations().filter((item) => item.deleted).length;
+  }
+
+  addLocation(location: HousingLocationInfo) {
+    const currentLocations = [...this.locations()];
+    location.id = currentLocations.length;
+    currentLocations.push(location);
+
+    this.locations.set(currentLocations);
   }
 }

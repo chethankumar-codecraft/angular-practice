@@ -19,9 +19,10 @@
     >
       Restore Deleted Items ({{ locationService.getDeletedCount() }})
     </button>
+    <button class="add-btn" (click)="handleAddLocation()">+ ADD</button>
   </section>
   <section class="results">
-    @for (card of cards(); track card.id) {
+    @for (card of locationToDisplay(); track card.id) {
       <app-housing-location
         [location]="card"
         (locationClick)="handleClick($event)"

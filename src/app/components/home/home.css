@@ -105,3 +105,25 @@ input[type='text'] {
 .checkbox:checked::before {
   transform: translateX(24px);
 }
+
+.add-btn {
+  padding: 8px 14px;
+  background-color: #4cafef;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.add-btn:hover {
+  background-color: #3498db;
+}
+
+.add-btn:active {
+  transform: scale(0.97);
+}

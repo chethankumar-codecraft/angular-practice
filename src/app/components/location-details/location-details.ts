@@ -32,7 +32,9 @@ export class LocationDetails {
     this.route.params.subscribe((params) => {
       this.housingLocationId = Number(params['id']);
       this.location = this.locationService.getLocationForId(this.housingLocationId);
-      this.allLocationsList = this.locationService.getAllLocations();
+      this.allLocationsList = this.locationService
+        .getAllLocations()()
+        .filter((item) => !item.deleted);
       this.locationIndex = this.allLocationsList.findIndex(
         (item) => item.id === this.housingLocationId,
       );
