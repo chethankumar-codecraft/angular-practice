@@ -88,8 +88,8 @@ export class Home {
   handleAddLocation() {
     const aLocation = {
       id: 9,
-      name: 'Capital Safe Towns',
-      city: 'Portland',
+      name: 'My Home',
+      city: 'Moodbidri',
       state: 'OR',
       photo: `${this.baseUrl}/krzysztof-hepner-978RAXoXnH4-unsplash.jpg`,
       availableUnits: 6,

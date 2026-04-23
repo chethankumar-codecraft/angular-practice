@@ -16,7 +16,7 @@ export class LocationService {
     console.log('Number of instances of Location Service', LocationService.numberOfInstances);
   }
   private readonly baseUrl = inject(BASE_URL);
-  private housingLocations: HousingLocationInfo[] = [
+  private readonly housingLocations: HousingLocationInfo[] = [
     {
       id: 0,
       name: 'Acme Fresh Start Housing',

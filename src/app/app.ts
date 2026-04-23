@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Home } from './components/home/home';
 import { Counter } from '@components/counter/counter';
+import { LinkedSignalDemo } from '@components/linked-signal-demo/linked-signal-demo';
 
 @Component({
   selector: 'app-root',

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocationService } from '../../services/location-service';
 import { HousingLocationInfo } from '../../models/housing-location-info';
@@ -16,6 +16,7 @@ export class LocationDetails {
   //object,and from it we can get the dynamic param from the url
   route: ActivatedRoute = inject(ActivatedRoute);
   housingLocationId = -1;
+  // id=input.required<number>
   locationService: LocationService = inject(LocationService);
   location: HousingLocationInfo | undefined;
   router = inject(Router);
