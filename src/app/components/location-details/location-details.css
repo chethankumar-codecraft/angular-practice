@@ -1,39 +1,80 @@
-section {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 20px;
+article {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  background-color: #3f51b5; /* primary blue */
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-button:hover {
-  background-color: #303f9f;
-}
-
-button:active {
-  transform: scale(0.96);
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-.listing-photo {
-  width: 50%;
-  height: 400px;
-}
 .photo-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-bottom: 16px;
+}
+
+.listing-photo {
+  width: 100%;
+  max-width: 700px;
+  height: 310px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.listing-description {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.listing-heading {
+  margin: 8px 0;
+  font-size: 22px;
+}
+
+.listing-location {
+  color: #555;
+  margin: 0;
+}
+
+.listing-features {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.listing-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+.listing-features li {
+  margin: 6px 0;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 25px 0;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #3f51b5;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  background-color: #cfcfcf;
+  cursor: not-allowed;
+}
+.edit-btn {
+  background-color: #3498db;
 }

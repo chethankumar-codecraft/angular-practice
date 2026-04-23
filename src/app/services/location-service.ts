@@ -1,5 +1,5 @@
 import { inject, Injectable, InjectionToken, Signal, signal } from '@angular/core';
-import { HousingLocationInfo } from '../models/housing-location-info';
+import { HousingLocationInfo, NewHousingLocation } from '../models/housing-location-info';
 import { __values } from 'tslib';
 
 export const BASE_URL = new InjectionToken<string>('base-url', {
@@ -165,11 +165,25 @@ export class LocationService {
     return this.locations().filter((item) => item.deleted).length;
   }
 
-  addLocation(location: HousingLocationInfo) {
+  addLocation(location: NewHousingLocation) {
     const currentLocations = [...this.locations()];
-    location.id = currentLocations.length;
-    currentLocations.push(location);
-
+    const newId = currentLocations.length;
+    currentLocations.push({ id: newId, ...location, deleted: false });
     this.locations.set(currentLocations);
+  }
+
+  updateLocation(id: number, updatedLocation: NewHousingLocation) {
+    const currentLocations = [...this.locations()];
+
+    const updatedList = currentLocations.map((location) => {
+      if (location.id === id) {
+        return {
+          ...location,
+          ...updatedLocation,
+        };
+      }
+      return location;
+    });
+    this.locations.set(updatedList);
   }
 }

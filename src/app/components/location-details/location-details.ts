@@ -1,12 +1,12 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, computed, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocationService } from '../../services/location-service';
 import { HousingLocationInfo } from '../../models/housing-location-info';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-location-details',
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './location-details.html',
   styleUrl: './location-details.css',
 })
@@ -15,10 +15,10 @@ export class LocationDetails {
   //For that angular can provide us the activated route
   //object,and from it we can get the dynamic param from the url
   route: ActivatedRoute = inject(ActivatedRoute);
-  housingLocationId = -1;
+  housingLocationId = signal(-1);
   // id=input.required<number>
   locationService: LocationService = inject(LocationService);
-  location: HousingLocationInfo | undefined;
+  location = computed(() => this.locationService.getLocationForId(this.housingLocationId()));
   router = inject(Router);
   allLocationsList: HousingLocationInfo[] = [];
   locationIndex = -1;
@@ -31,15 +31,14 @@ export class LocationDetails {
   ngOnInit() {
     console.log('All are ready');
     this.route.params.subscribe((params) => {
-      this.housingLocationId = Number(params['id']);
-      this.location = this.locationService.getLocationForId(this.housingLocationId);
+      this.housingLocationId.set(Number(params['id']));
       this.allLocationsList = this.locationService
         .getAllLocations()()
         .filter((item) => !item.deleted);
       this.locationIndex = this.allLocationsList.findIndex(
-        (item) => item.id === this.housingLocationId,
+        (item) => item.id === this.housingLocationId(),
       );
-      if (!this.location) {
+      if (!this.location()) {
         this.router.navigate(['/']);
         return;
       }
@@ -60,5 +59,8 @@ export class LocationDetails {
   handleNext() {
     if (this.locationIndex < this.allLocationsList.length - 1)
       this.router.navigate(['details', this.allLocationsList[this.locationIndex + 1].id]);
+  }
+  handleEdit() {
+    this.router.navigate(['edit'], { relativeTo: this.route });
   }
 }

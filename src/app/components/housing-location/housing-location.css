@@ -90,3 +90,15 @@ section.listing a::after {
   border-radius: 50%;
   z-index: 10;
 }
+.edit-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  background-color: #3498db;
+  width: 65px;
+  height: 35px;
+  color: white;
+}

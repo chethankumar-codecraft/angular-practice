@@ -3,12 +3,12 @@ import { HousingLocation } from '@components/housing-location/housing-location';
 import { HousingLocationInfo } from '../../models/housing-location-info';
 import { BASE_URL, LocationService } from '../../services/location-service';
 import { HousingCardView } from '../../models/housing-location-info';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 //View model type
 
 @Component({
   selector: 'app-home',
-  imports: [HousingLocation],
+  imports: [HousingLocation, RouterOutlet],
   templateUrl: './home.html',
   styleUrl: './home.css',
   // providers: [{ provide: LocationService, useClass: LocationService }],
@@ -23,6 +23,7 @@ export class Home {
       : 'Please select the items to edit',
   );
 
+  activatedRoute = inject(ActivatedRoute);
   baseUrl = inject(BASE_URL);
 
   locationToDisplay = linkedSignal<HousingLocationInfo[], HousingCardView[]>({
@@ -86,17 +87,6 @@ export class Home {
     this.locationService.restoreAllDeletedLocation();
   }
   handleAddLocation() {
-    const aLocation = {
-      id: 9,
-      name: 'My Home',
-      city: 'Moodbidri',
-      state: 'OR',
-      photo: `${this.baseUrl}/krzysztof-hepner-978RAXoXnH4-unsplash.jpg`,
-      availableUnits: 6,
-      wifi: true,
-      laundry: true,
-      deleted: false,
-    };
-    this.locationService.addLocation(aLocation);
+    this.router.navigate(['edit'], { relativeTo: this.activatedRoute });
   }
 }

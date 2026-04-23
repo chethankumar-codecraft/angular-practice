@@ -1,0 +1,40 @@
+<div class="overlay" (click)="handleClose()">
+  <div class="panel" [class.show-panel]="shouldShowPanel()" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="handleClose()" type="button">Close</button>
+    <h2>{{ editingId ? 'Edit Home Details' : 'Add Home' }}</h2>
+    <form [formGroup]="HomeForm" (ngSubmit)="onSubmit()">
+      <label for="name">
+        Name :
+        <input type="text" id="name" formControlName="name" />
+      </label>
+      <label for="city">
+        City :
+        <input type="text" id="city" formControlName="city" />
+      </label>
+      <label for="state">
+        State :
+        <input type="text" id="state" formControlName="state" />
+      </label>
+      <label for="photo">
+        Url of Homes Photo :
+        <input type="text" id="photo" formControlName="photo" />
+      </label>
+      <label for="availableUnits">
+        Available Units :
+        <input type="number" id="availableUnits" formControlName="availableUnits" />
+      </label>
+      <label for="wifi">
+        Is wifi Available? :
+        <input type="checkbox" id="wifi" formControlName="wifi" />
+      </label>
+      <label for="laundry">
+        Is Laundry Service Available? :
+        <input type="checkbox" id="laundry" formControlName="laundry" />
+      </label>
+      <button class="submit-btn" type="submit" [disabled]="HomeForm.invalid">
+        {{ editingId ? 'Save Changes' : 'Save' }}
+      </button>
+      <button class="reset-btn" type="button" (click)="HomeForm.reset()">Reset</button>
+    </form>
+  </div>
+</div>

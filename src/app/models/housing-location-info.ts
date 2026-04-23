@@ -13,3 +13,5 @@ export interface HousingLocationInfo {
 export interface HousingCardView extends HousingLocationInfo {
   selected: boolean;
 }
+
+export type NewHousingLocation = Omit<HousingLocationInfo, 'id' | 'deleted'>;

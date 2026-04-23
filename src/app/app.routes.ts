@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { FormDemo } from '@components/form-demo/form-demo';
 import { Home } from '@components/home/home';
 import { LinkedSignalDemo } from '@components/linked-signal-demo/linked-signal-demo';
-import { LocationDetails } from '@components/location-details/location-details';
+import { LocationForm } from '@components/location-form/location-form';
 
 export const routes: Routes = [
   {
@@ -14,6 +14,18 @@ export const routes: Routes = [
     path: 'home',
     component: Home,
     title: 'Home page',
+    children: [
+      {
+        path: 'edit',
+        component: LocationForm,
+        title: 'Edit Location',
+      },
+      {
+        path: 'edit/:id',
+        component: LocationForm,
+        title: 'Edit Location',
+      },
+    ],
   },
   {
     path: 'details/:id',
@@ -21,6 +33,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/location-details/location-details').then((m) => m.LocationDetails),
     title: 'Home details',
+    children: [
+      {
+        path: 'edit',
+        component: LocationForm,
+        title: 'Edit Location',
+      },
+    ],
   },
   {
     path: 'linked-signal',

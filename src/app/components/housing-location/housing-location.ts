@@ -1,9 +1,11 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, computed } from '@angular/core';
 import { HousingLocationInfo } from '../../models/housing-location-info';
 import { BASE_URL, LocationService } from '../../services/location-service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-housing-location',
+  standalone: true,
   imports: [],
   templateUrl: './housing-location.html',
   styleUrl: './housing-location.css',
@@ -15,6 +17,9 @@ export class HousingLocation {
   locationService = inject(LocationService);
   baseURL = inject(BASE_URL);
   selectedLocation = input<boolean>();
+  mode = input.required<'normal' | 'edit'>();
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   handleClick(event: MouseEvent) {
     console.log(event.target);
@@ -22,5 +27,12 @@ export class HousingLocation {
     console.log(this.baseURL);
     console.log(`${this.location().name} is clicked`);
     this.locationClick.emit(this.location());
+  }
+
+  onEdit(event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['edit', this.location().id], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }

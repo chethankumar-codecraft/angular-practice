@@ -1,12 +1,20 @@
 <section>
-  <form>
-    <input type="text" placeholder="Filter by city" />
-    <button class="primary" type="button">Search</button>
-  </form>
+  <div class="controls-container">
+    <form class="search-bar">
+      <input type="text" placeholder="Filter by city" />
+      <button class="primary" type="button">Search</button>
+    </form>
+    <button class="add-btn" (click)="handleAddLocation()">+ ADD NEW</button>
+  </div>
   <section>
     <label>
       Edit Mode :
-      <input class="checkbox" type="checkbox" (click)="handleCheck($event)" />
+      <input
+        class="checkbox"
+        type="checkbox"
+        (click)="handleCheck($event)"
+        [checked]="mode() === 'edit'"
+      />
     </label>
     <p>{{ modeString() }}</p>
     <button class="delete-btn" [disabled]="selectedIds().length === 0" (click)="onDelete()">
@@ -19,7 +27,6 @@
     >
       Restore Deleted Items ({{ locationService.getDeletedCount() }})
     </button>
-    <button class="add-btn" (click)="handleAddLocation()">+ ADD</button>
   </section>
   <section class="results">
     @for (card of locationToDisplay(); track card.id) {
@@ -27,9 +34,11 @@
         [location]="card"
         (locationClick)="handleClick($event)"
         [selectedLocation]="card.selected"
+        [mode]="mode()"
       />
     } @empty {
       <h1>No Homes Available</h1>
     }
   </section>
 </section>
+<router-outlet />

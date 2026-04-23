@@ -3,3 +3,6 @@ form {
   flex-direction: column;
   width: 20%;
 }
+.error {
+  color: red;
+}
