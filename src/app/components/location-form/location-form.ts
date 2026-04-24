@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { LocationService } from '../../services/location-service';
 import { NewHousingLocation } from '../../models/housing-location-info';
+import { A11yModule } from '@angular/cdk/a11y';
+import { HostListener } from '@angular/core';
+
 import {
   FormControl,
   FormGroup,
@@ -10,9 +13,10 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
+
 @Component({
   selector: 'app-location-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, A11yModule],
   templateUrl: './location-form.html',
   styleUrl: './location-form.css',
 })
@@ -29,7 +33,7 @@ export class LocationForm {
     name: ['', Validators.required],
     city: ['', Validators.required],
     state: ['', Validators.required],
-    photo: [''],
+    photo: ['', Validators.required],
     availableUnits: [0],
     wifi: [false],
     laundry: [false],
@@ -48,16 +52,27 @@ export class LocationForm {
       }
     }
   }
+  private setPanelState(open: boolean) {
+    this.shouldShowPanel.set(open);
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
   showPanel() {
     this.shouldShowPanel.set(true);
+    this.setPanelState(true);
   }
   hidePanel() {
     this.shouldShowPanel.set(false);
+    this.setPanelState(false);
     this.editingId = null;
     this.location.back();
   }
   onSubmit() {
-    const formValue: NewHousingLocation = this.HomeForm.getRawValue();
+    const formValue: NewHousingLocation = this.HomeForm.value as NewHousingLocation;
     if (this.editingId !== null) {
       if (this.HomeForm.dirty) this.locationService.updateLocation(this.editingId, formValue);
     } else {
@@ -75,6 +90,14 @@ export class LocationForm {
       }
     } else {
       this.hidePanel();
+    }
+  }
+
+  //esc
+  @HostListener('document:keydown.escape')
+  onEsc() {
+    if (this.shouldShowPanel()) {
+      this.handleClose();
     }
   }
 }

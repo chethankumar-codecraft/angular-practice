@@ -14,8 +14,11 @@
   background: rgba(255, 255, 255, 0.85);
   transition: transform 0.5s ease;
   padding: 10px;
+  overflow-y: auto;
 }
-
+.required {
+  color: red;
+}
 .show-panel {
   transform: translateX(0);
 }
@@ -32,6 +35,7 @@ input[type='number'] {
   padding: 10px 12px;
   border-radius: 8px;
   box-sizing: border-box;
+  border: 1px solid black;
 }
 
 input[type='checkbox'] {
@@ -39,6 +43,7 @@ input[type='checkbox'] {
   height: 18px;
   cursor: pointer;
   vertical-align: middle;
+  border: 1px solid black;
 }
 button {
   padding: 10px 16px;

@@ -1,22 +1,29 @@
 <div class="overlay" (click)="handleClose()">
-  <div class="panel" [class.show-panel]="shouldShowPanel()" (click)="$event.stopPropagation()">
+  <div
+    class="panel"
+    [class.show-panel]="shouldShowPanel()"
+    (click)="$event.stopPropagation()"
+    cdkTrapFocus
+    cdkTrapFocusAutoCapture
+  >
     <button class="close-btn" (click)="handleClose()" type="button">Close</button>
     <h2>{{ editingId ? 'Edit Home Details' : 'Add Home' }}</h2>
+    <p class="required">Fields marked * are required</p>
     <form [formGroup]="HomeForm" (ngSubmit)="onSubmit()">
       <label for="name">
-        Name :
+        Name <span class="required">*</span> :
         <input type="text" id="name" formControlName="name" />
       </label>
       <label for="city">
-        City :
+        City <span class="required">*</span> :
         <input type="text" id="city" formControlName="city" />
       </label>
       <label for="state">
-        State :
+        State <span class="required">*</span> :
         <input type="text" id="state" formControlName="state" />
       </label>
       <label for="photo">
-        Url of Homes Photo :
+        Url of Homes Photo <span class="required">*</span> :
         <input type="text" id="photo" formControlName="photo" />
       </label>
       <label for="availableUnits">
