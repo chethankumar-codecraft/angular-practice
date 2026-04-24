@@ -7,16 +7,19 @@
     <button class="add-btn" (click)="handleAddLocation()">+ ADD NEW</button>
   </div>
   <section>
-    <label>
-      Edit Mode :
-      <input
-        class="checkbox"
-        type="checkbox"
-        (click)="handleCheck($event)"
-        [checked]="mode() === 'edit'"
-      />
-    </label>
-    <p>{{ modeString() }}</p>
+    <div class="left-tool">
+      <label>
+        Edit Mode :
+        <input
+          class="checkbox"
+          type="checkbox"
+          (click)="handleCheck($event)"
+          [checked]="mode() === 'edit'"
+        />
+      </label>
+      <p>{{ modeString() }}</p>
+    </div>
+    <div class="right-tool">
     <button class="delete-btn" [disabled]="selectedIds().length === 0" (click)="onDelete()">
       Delete Selected Items ({{ selectedIds().length }})
     </button>
@@ -27,6 +30,7 @@
     >
       Restore Deleted Items ({{ locationService.getDeletedCount() }})
     </button>
+    </div>
   </section>
   <section class="results">
     @for (card of locationToDisplay(); track card.id) {

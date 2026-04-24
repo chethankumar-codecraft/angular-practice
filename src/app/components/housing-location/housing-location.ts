@@ -31,7 +31,7 @@ export class HousingLocation {
 
   onEdit(event: Event) {
     event.stopPropagation();
-    this.router.navigate(['edit', this.location().id], {
+    this.router.navigate([this.location().id, 'edit'], {
       relativeTo: this.activatedRoute,
     });
   }

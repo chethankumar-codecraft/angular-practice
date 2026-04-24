@@ -1,80 +1,64 @@
 article {
-  max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px 20px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'photo desc'
+    'photo features';
+  gap: 18px;
+  align-items: start;
 }
 
+/* LEFT SIDE */
 .photo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 16px;
+  grid-area: photo;
 }
 
 .listing-photo {
   width: 100%;
-  max-width: 700px;
-  height: 310px;
+  height: 500px;
   object-fit: cover;
-  border-radius: 10px;
+  object-position: center;
+  border-radius: 14px;
 }
-
-.listing-description {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.listing-heading {
-  margin: 8px 0;
-  font-size: 22px;
-}
-
-.listing-location {
-  color: #555;
-  margin: 0;
-}
-
+.listing-description,
 .listing-features {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.listing-features ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 0;
-}
-
-.listing-features li {
-  margin: 6px 0;
-  color: #333;
+  margin-left: 50px;
+  text-align: left;
 }
 
 .actions {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   margin: 25px 0;
 }
 
 button {
-  padding: 8px 14px;
+  padding: 9px 16px;
   border: none;
   border-radius: 6px;
   background-color: #3f51b5;
   color: white;
   font-size: 14px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition:
+    transform 0.15s ease,
+    opacity 0.2s ease;
 }
 
 button:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 button:disabled {
   background-color: #cfcfcf;
   cursor: not-allowed;
+  opacity: 0.8;
 }
+
 .edit-btn {
   background-color: #3498db;
 }

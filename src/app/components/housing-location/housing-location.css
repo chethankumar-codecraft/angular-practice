@@ -97,8 +97,8 @@ section.listing a::after {
   border-radius: 8px;
   border: none;
   font-size: 14px;
-  background-color: #3498db;
-  width: 65px;
-  height: 35px;
+  background: var(--primary-color);
+  width: 68px;
+  height: 38px;
   color: white;
 }

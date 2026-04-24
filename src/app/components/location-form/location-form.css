@@ -94,3 +94,10 @@ button:disabled:hover {
   color: white;
   cursor: not-allowed !important;
 }
+
+.error {
+  color: red;
+  font-size: 15px;
+  margin: -10px 5px;
+  min-height: 18px;
+}

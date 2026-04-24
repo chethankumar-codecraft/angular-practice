@@ -7,17 +7,23 @@
     cdkTrapFocusAutoCapture
   >
     <button class="close-btn" (click)="handleClose()" type="button">Close</button>
-    <h2>{{ editingId ? 'Edit Home Details' : 'Add Home' }}</h2>
-    <p class="required">Fields marked * are required</p>
+    <h2>{{ editingId !== null ? 'Edit Home Details' : 'Add Home' }}</h2>
+    <p>Fields marked <span class="required">*</span> are required</p>
     <form [formGroup]="HomeForm" (ngSubmit)="onSubmit()">
       <label for="name">
         Name <span class="required">*</span> :
         <input type="text" id="name" formControlName="name" />
       </label>
+      @if (HomeForm.controls.name.touched && HomeForm.controls.name.invalid) {
+        <p class="error">Name is required</p>
+      }
       <label for="city">
         City <span class="required">*</span> :
         <input type="text" id="city" formControlName="city" />
       </label>
+      @if (HomeForm.controls.city.touched && HomeForm.controls.city.invalid) {
+        <p class="error">City is required</p>
+      }
       <label for="state">
         State <span class="required">*</span> :
         <input type="text" id="state" formControlName="state" />
@@ -26,6 +32,9 @@
         Url of Homes Photo <span class="required">*</span> :
         <input type="text" id="photo" formControlName="photo" />
       </label>
+      @if (HomeForm.controls.photo.touched && HomeForm.controls.photo.invalid) {
+        <p class="error">Photo URL is required</p>
+      }
       <label for="availableUnits">
         Available Units :
         <input type="number" id="availableUnits" formControlName="availableUnits" />
@@ -39,7 +48,7 @@
         <input type="checkbox" id="laundry" formControlName="laundry" />
       </label>
       <button class="submit-btn" type="submit" [disabled]="HomeForm.invalid">
-        {{ editingId ? 'Save Changes' : 'Save' }}
+        {{ editingId !== null ? 'Save Changes' : 'Save' }}
       </button>
       <button class="reset-btn" type="button" (click)="HomeForm.reset()">Reset</button>
     </form>

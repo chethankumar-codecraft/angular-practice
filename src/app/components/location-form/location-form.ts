@@ -32,7 +32,7 @@ export class LocationForm {
   HomeForm = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
     city: ['', Validators.required],
-    state: ['', Validators.required],
+    state: [''],
     photo: ['', Validators.required],
     availableUnits: [0],
     wifi: [false],

@@ -87,6 +87,6 @@ export class Home {
     this.locationService.restoreAllDeletedLocation();
   }
   handleAddLocation() {
-    this.router.navigate(['edit'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['new'], { relativeTo: this.activatedRoute });
   }
 }
