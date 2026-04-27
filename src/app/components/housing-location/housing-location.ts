@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-housing-location',
-  standalone: true,
+  // standalone: true,
   imports: [],
   templateUrl: './housing-location.html',
   styleUrl: './housing-location.css',

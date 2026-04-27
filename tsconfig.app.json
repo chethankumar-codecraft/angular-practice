@@ -6,6 +6,6 @@
     // "outDir": "./dist",
     "types": []
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/practiceBind.js"],
   "exclude": ["src/**/*.spec.ts"]
 }

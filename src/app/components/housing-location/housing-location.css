@@ -4,7 +4,7 @@
   padding-bottom: 30px;
   position: relative;
 }
-.listing-heading {
+.listing-heading {  
   color: var(--primary-color);
   padding: 10px 20px 0 20px;
 }
