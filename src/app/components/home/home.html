@@ -20,16 +20,16 @@
       <p>{{ modeString() }}</p>
     </div>
     <div class="right-tool">
-    <button class="delete-btn" [disabled]="selectedIds().length === 0" (click)="onDelete()">
-      Delete Selected Items ({{ selectedIds().length }})
-    </button>
-    <button
-      class="restore-btn"
-      (click)="onRestore()"
-      [disabled]="locationService.getDeletedCount() === 0"
-    >
-      Restore Deleted Items ({{ locationService.getDeletedCount() }})
-    </button>
+      <button class="delete-btn" [disabled]="selectedIds().length === 0" (click)="onDelete()">
+        Delete Selected Items ({{ selectedIds().length }})
+      </button>
+      <button
+        class="restore-btn"
+        (click)="onRestore()"
+        [disabled]="locationService.getDeletedCount() === 0"
+      >
+        Restore Deleted Items ({{ locationService.getDeletedCount() }})
+      </button>
     </div>
   </section>
   <section class="results">
@@ -46,3 +46,4 @@
   </section>
 </section>
 <router-outlet />
+

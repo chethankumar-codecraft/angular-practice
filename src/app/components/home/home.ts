@@ -4,6 +4,7 @@ import { HousingLocationInfo } from '../../models/housing-location-info';
 import { BASE_URL, LocationService } from '../../services/location-service';
 import { HousingCardView } from '../../models/housing-location-info';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ToastService } from '../../services/toast-service';
 //View model type
 
 @Component({
@@ -16,6 +17,7 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 export class Home {
   locationService: LocationService = inject(LocationService);
   mode = signal<'normal' | 'edit'>('normal');
+  toast = inject(ToastService);
   router = inject(Router);
   modeString = computed(() =>
     this.mode() === 'normal'
@@ -80,11 +82,13 @@ export class Home {
       selected: false,
     }));
     this.locationToDisplay.set(reset);
+    this.toast.show(`🗑️ Selected homes deleted successfully.`);
   }
   onRestore() {
     const confirmed = confirm('Are you sure you want to restore all the deleted items?');
     if (!confirmed) return;
     this.locationService.restoreAllDeletedLocation();
+    this.toast.show(`↩️ Homes restored successfully.`);
   }
   handleAddLocation() {
     this.router.navigate(['new'], { relativeTo: this.activatedRoute });

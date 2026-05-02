@@ -2,11 +2,11 @@ import { Component, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Home } from './components/home/home';
 import { Counter } from '@components/counter/counter';
-import { LinkedSignalDemo } from '@components/linked-signal-demo/linked-signal-demo';
+import { Toast } from '@components/toast/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Home, Counter, RouterLink],
+  imports: [RouterOutlet, Home, Counter, RouterLink, Toast],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

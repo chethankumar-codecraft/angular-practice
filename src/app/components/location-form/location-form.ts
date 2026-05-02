@@ -6,6 +6,7 @@ import { NewHousingLocation } from '../../models/housing-location-info';
 import { A11yModule } from '@angular/cdk/a11y';
 
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ToastService } from '../../services/toast-service';
 
 @Component({
   selector: 'app-location-form',
@@ -24,6 +25,7 @@ export class LocationForm {
   editingId: number | null = null;
   locationService = inject(LocationService);
   location = inject(Location);
+  toast = inject(ToastService);
 
   homeForm = this.formBuilder.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -83,8 +85,10 @@ export class LocationForm {
     const formValue: NewHousingLocation = this.homeForm.value as NewHousingLocation;
     if (this.editingId !== null) {
       if (this.homeForm.dirty) this.locationService.updateLocation(this.editingId, formValue);
+      this.toast.show(`✔️ "${formValue.name}" updated successfully.`);
     } else {
       this.locationService.addLocation(formValue);
+      this.toast.show(`✔️ "${formValue.name}" added successfully.`);
     }
     this.hidePanel();
   }
