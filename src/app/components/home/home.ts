@@ -5,6 +5,7 @@ import { BASE_URL, LocationService } from '../../services/location-service';
 import { HousingCardView } from '../../models/housing-location-info';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { ToastService } from '../../services/toast-service';
+import { filter } from 'rxjs';
 //View model type
 
 @Component({
@@ -27,13 +28,16 @@ export class Home {
 
   activatedRoute = inject(ActivatedRoute);
   baseUrl = inject(BASE_URL);
+  searchQuery = signal('');
 
   locationToDisplay = linkedSignal<HousingLocationInfo[], HousingCardView[]>({
     source: this.locationService.getAllLocations(),
     computation: (newDependencyHousingLocationInfoArray, prevValue) => {
       const prevLocationViewModels = (prevValue?.value as HousingCardView[]) ?? [];
+      const query = this.searchQuery().toLowerCase().trim();
       const viewLocationModels = newDependencyHousingLocationInfoArray
         .filter((hl) => !hl.deleted)
+        .filter((hl) => !query || hl.city.toLowerCase().includes(query))
         .map((hl) => {
           const matchedModel = prevLocationViewModels.find(
             (prevLocation) => prevLocation.id === hl.id,
@@ -92,5 +96,10 @@ export class Home {
   }
   handleAddLocation() {
     this.router.navigate(['new'], { relativeTo: this.activatedRoute });
+  }
+  //search feature
+  onSearch(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchQuery.set(value);
   }
 }
