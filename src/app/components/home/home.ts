@@ -1,16 +1,28 @@
-import { Component, inject, signal, computed, linkedSignal } from '@angular/core';
+import { Component, inject, signal, computed, linkedSignal, DestroyRef } from '@angular/core';
 import { HousingLocation } from '@components/housing-location/housing-location';
 import { HousingLocationInfo } from '../../models/housing-location-info';
 import { BASE_URL, LocationService } from '../../services/location-service';
 import { HousingCardView } from '../../models/housing-location-info';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../services/toast-service';
-import { filter } from 'rxjs';
+import {
+  debounceTime,
+  switchMap,
+  of,
+  delay,
+  Observable,
+  distinctUntilChanged,
+} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { SearchBar } from '@components/search-bar/search-bar';
+
 //View model type
 
 @Component({
   selector: 'app-home',
-  imports: [HousingLocation, RouterOutlet],
+  imports: [HousingLocation, RouterOutlet, SearchBar],
   templateUrl: './home.html',
   styleUrl: './home.css',
   // providers: [{ provide: LocationService, useClass: LocationService }],
@@ -20,6 +32,8 @@ export class Home {
   mode = signal<'normal' | 'edit'>('normal');
   toast = inject(ToastService);
   router = inject(Router);
+  http = inject(HttpClient);
+  private destroyRef = inject(DestroyRef);
   modeString = computed(() =>
     this.mode() === 'normal'
       ? 'Click on a property card to view its details'
@@ -29,15 +43,27 @@ export class Home {
   activatedRoute = inject(ActivatedRoute);
   baseUrl = inject(BASE_URL);
   searchQuery = signal('');
+  search$ = toObservable(this.searchQuery);
+
+  ngOnInit() {
+    this.search$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((query) => this.fakeApiSearch(query)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((results) => {
+        this.locationToDisplay.set(results);
+      });
+  }
 
   locationToDisplay = linkedSignal<HousingLocationInfo[], HousingCardView[]>({
     source: this.locationService.getAllLocations(),
     computation: (newDependencyHousingLocationInfoArray, prevValue) => {
       const prevLocationViewModels = (prevValue?.value as HousingCardView[]) ?? [];
-      const query = this.searchQuery().toLowerCase().trim();
       const viewLocationModels = newDependencyHousingLocationInfoArray
         .filter((hl) => !hl.deleted)
-        .filter((hl) => !query || hl.city.toLowerCase().includes(query))
         .map((hl) => {
           const matchedModel = prevLocationViewModels.find(
             (prevLocation) => prevLocation.id === hl.id,
@@ -97,9 +123,28 @@ export class Home {
   handleAddLocation() {
     this.router.navigate(['new'], { relativeTo: this.activatedRoute });
   }
-  //search feature
-  onSearch(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
+
+  //search
+  onSearch(value: string) {
     this.searchQuery.set(value);
+  }
+
+  fakeApiSearch(query: string): Observable<HousingCardView[]> {
+    const all = this.locationService.getAllLocations()();
+
+    const filtered = all
+      .filter((hl) => !hl.deleted)
+      .filter(
+        (hl) =>
+          !query ||
+          hl.city.toLowerCase().includes(query.toLowerCase()) ||
+          hl.name.toLowerCase().includes(query.toLowerCase()),
+      )
+      .map((hl) => ({
+        ...hl,
+        selected: false,
+      }));
+
+    return of(filtered).pipe(delay(500));
   }
 }
