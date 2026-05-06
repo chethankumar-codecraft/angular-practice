@@ -152,6 +152,7 @@ input[type='text'] {
   gap: 5px;
   font-size: 16px;
   color: #160101;
+  inset: 0;
 }
 
 .loading::before {

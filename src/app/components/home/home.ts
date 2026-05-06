@@ -104,8 +104,6 @@ export class Home {
       .map((card) => card.id),
   );
 
-  // selectedIds = signal<number[]>([]);
-
   handleClick(item: HousingLocationInfo) {
     //If we are in normal then only we need to naviagte
     if (this.mode() === 'normal') this.router.navigate(['details', item.id]);

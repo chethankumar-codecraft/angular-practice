@@ -21,7 +21,7 @@ article {
   height: 500px;
   object-fit: cover;
   object-position: center;
-  border-radius: 14px;
+  border-radius: 30px;
 }
 .listing-description,
 .listing-features {

@@ -1,5 +1,5 @@
 <article>
-  <section class="photo-container">
+  <section class="photo-container" card-photo>
     <img
       class="listing-photo"
       [src]="location()?.photo"
@@ -7,11 +7,12 @@
       crossorigin
     />
   </section>
-  <section class="listing-description">
+
+  <section class="listing-description" card-description>
     <h2 class="listing-heading">{{ location()?.name }}</h2>
     <p class="listing-location">{{ location()?.city }}, {{ location()?.state }}</p>
   </section>
-  <section class="listing-features">
+  <section class="listing-features" card-features>
     <h2 class="section-heading">About this housing location</h2>
     <ul>
       <li>Units available: {{ location()?.availableUnits }}</li>
@@ -34,4 +35,5 @@
     Next →
   </button>
 </section>
+
 <router-outlet />
