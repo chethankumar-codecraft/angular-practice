@@ -33,15 +33,56 @@
     </div>
   </section>
   <section class="results">
-    @for (card of locationToDisplay(); track card.id) {
-      <app-housing-location
-        [location]="card"
-        (locationClick)="handleClick($event)"
-        [selectedLocation]="card.selected"
-        [mode]="mode()"
-      />
-    } @empty {
-      <h1>No Homes Available</h1>
+    @if (!isDesktop()) {
+      @for (card of locationToDisplay(); track card.id) {
+        <app-housing-location
+          [location]="card"
+          (locationClick)="handleClick($event)"
+          [selectedLocation]="card.selected"
+          [mode]="mode()"
+        />
+      } @empty {
+        <h1>No Homes Available</h1>
+      }
+    } @else {
+      <p-table [value]="locationToDisplay()">
+        <ng-template #header>
+          <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Image</th>
+            <th>accessories</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-row>
+          <tr (click)="handleClick(row)" [class.selected]="row.selected">
+            <td>{{ row.name }}</td>
+            <td>{{ row.city }}</td>
+            <td>{{ row.state }}</td>
+            <td>
+              <img class="table-img" [src]="row.photo" />
+            </td>
+            <td class="features">
+              @if (row.wifi) {
+                <span class="badge wifi">WiFi</span>
+              }
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="5">No data found</td>
+          </tr>
+        </ng-template>
+        <ng-template #footer>
+          <tr>
+            <td colspan="5">
+              In total there are {{ locationToDisplay() ? locationToDisplay().length : 0 }} Homes.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     }
   </section>
 </section>

@@ -16,16 +16,16 @@ import {
   catchError,
   of,
   filter,
-  BehaviorSubject,
 } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SearchBar } from '@components/search-bar/search-bar';
+import { TableModule } from 'primeng/table';
 
 //View model type
 
 @Component({
   selector: 'app-home',
-  imports: [HousingLocation, RouterOutlet, SearchBar],
+  imports: [HousingLocation, RouterOutlet, SearchBar, TableModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
   // providers: [{ provide: LocationService, useClass: LocationService }],
@@ -47,6 +47,7 @@ export class Home {
   baseUrl = inject(BASE_URL);
   search$ = new Subject<string>();
   loading = signal(false);
+  isDesktop = signal(false);
 
   ngOnInit() {
     this.search$
@@ -80,6 +81,18 @@ export class Home {
       .subscribe((results) => {
         this.locationToDisplay.set(results);
       });
+
+    //window-size
+    this.checkScreen();
+    const handler = () => this.checkScreen();
+    window.addEventListener('resize', handler);
+    this.destroyRef.onDestroy(() => {
+      window.removeEventListener('resize', handler);
+    });
+  }
+
+  checkScreen() {
+    this.isDesktop.set(window.innerWidth >= 768);
   }
 
   locationToDisplay = linkedSignal<HousingLocationInfo[], HousingCardView[]>({

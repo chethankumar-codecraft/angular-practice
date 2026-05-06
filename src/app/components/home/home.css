@@ -2,7 +2,7 @@
   display: grid;
   column-gap: 14px;
   row-gap: 14px;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 100%));
   margin-top: 50px;
   justify-content: space-around;
 }
@@ -170,3 +170,32 @@ input[type='text'] {
     transform: rotate(360deg);
   }
 }
+:host ::ng-deep .table-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover; 
+  border-radius: 6px;
+}
+:host ::ng-deep .p-datatable-tbody > tr {
+  height: 80px; /* adjust as needed */
+}
+:host ::ng-deep .p-datatable-tbody > tr.selected {
+  background: #acc9f0;
+  border-left: 4px solid #3b82f6;
+}
+
+.badge {
+  margin-right: 6px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.wifi {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* .laundry {
+  background: #fef3c7;
+  color: #92400e;
+} */

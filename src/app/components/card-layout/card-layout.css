@@ -1,10 +1,12 @@
 .card {
   transition: box-shadow 0.4s ease;
   border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.38);
+  transition: box-shadow 0.4s ease;
 }
 
-.card:hover {
+/* .card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.38);
   scale: 1.02;
   transition: box-shadow 0.4s ease;
-}
+} */
