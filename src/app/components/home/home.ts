@@ -5,15 +5,18 @@ import { BASE_URL, LocationService } from '../../services/location-service';
 import { HousingCardView } from '../../models/housing-location-info';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../services/toast-service';
 import {
   debounceTime,
   switchMap,
-  of,
-  delay,
-  Observable,
   distinctUntilChanged,
+  Subject,
+  map,
+  finalize,
+  catchError,
+  of,
+  filter,
+  BehaviorSubject,
 } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SearchBar } from '@components/search-bar/search-bar';
@@ -42,15 +45,36 @@ export class Home {
 
   activatedRoute = inject(ActivatedRoute);
   baseUrl = inject(BASE_URL);
-  searchQuery = signal('');
-  search$ = toObservable(this.searchQuery);
+  search$ = new Subject<string>();
+  loading = signal(false);
 
   ngOnInit() {
     this.search$
       .pipe(
         debounceTime(300),
+        map((query) => query.trim()),
         distinctUntilChanged(),
-        switchMap((query) => this.fakeApiSearch(query)),
+        filter((query) => query.length === 0 || query.length >= 3),
+        switchMap((query) => {
+          this.loading.set(true);
+          return this.locationService.searchLocations(query).pipe(
+            catchError(() => {
+              this.toast.show('Failed to load results');
+              return of([]);
+            }),
+            finalize(() => this.loading.set(false)),
+          );
+        }),
+        map((results) => {
+          const prev = this.locationToDisplay();
+          return results.map((hl) => {
+            const existing = prev.find((p) => p.id === hl.id);
+            return {
+              ...hl,
+              selected: existing?.selected ?? false,
+            };
+          });
+        }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((results) => {
@@ -126,25 +150,6 @@ export class Home {
 
   //search
   onSearch(value: string) {
-    this.searchQuery.set(value);
-  }
-
-  fakeApiSearch(query: string): Observable<HousingCardView[]> {
-    const all = this.locationService.getAllLocations()();
-
-    const filtered = all
-      .filter((hl) => !hl.deleted)
-      .filter(
-        (hl) =>
-          !query ||
-          hl.city.toLowerCase().includes(query.toLowerCase()) ||
-          hl.name.toLowerCase().includes(query.toLowerCase()),
-      )
-      .map((hl) => ({
-        ...hl,
-        selected: false,
-      }));
-
-    return of(filtered).pipe(delay(500));
+    this.search$.next(value);
   }
 }

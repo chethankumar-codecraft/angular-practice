@@ -1,6 +1,9 @@
 <section>
   <div class="controls-container">
     <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    @if (loading()) {
+      <span class="loading">Loading...</span>
+    }
     <button class="add-btn" (click)="handleAddLocation()">+ ADD NEW</button>
   </div>
   <section>

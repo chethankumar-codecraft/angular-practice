@@ -1,6 +1,7 @@
 import { inject, Injectable, InjectionToken, Signal, signal } from '@angular/core';
 import { HousingLocationInfo, NewHousingLocation } from '../models/housing-location-info';
 import { __values } from 'tslib';
+import { delay, of, throwError } from 'rxjs';
 
 export const BASE_URL = new InjectionToken<string>('base-url', {
   providedIn: 'root',
@@ -185,5 +186,22 @@ export class LocationService {
       return location;
     });
     this.locations.set(updatedList);
+  }
+
+  searchLocations(query: string) {
+    // if (query === 'fail') {
+    //   return throwError(() => new Error('Forced error'));
+    // }
+    const all = this.locations();
+    const filtered = all
+      .filter((hl) => !hl.deleted)
+      .filter(
+        (hl) =>
+          !query ||
+          hl.city.toLowerCase().includes(query.toLowerCase()) ||
+          hl.name.toLowerCase().includes(query.toLowerCase()),
+      );
+    // simulate backend delay
+    return of(filtered).pipe(delay(500));
   }
 }
